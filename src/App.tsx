@@ -492,7 +492,7 @@ const DEFAULT_APP_CONTROL_SETTINGS: AppControlSettings = {
   notificationId: '',
   notificationSentAt: '',
 };
-const DEFAULT_NATIVE_API_BASE_URL = 'https://monto.vercel.app';
+const DEFAULT_NATIVE_API_BASE_URL = 'https://monto-psi.vercel.app';
 const API_BASE_URL = String(
   import.meta.env.VITE_API_BASE_URL ||
   (Capacitor.isNativePlatform() ? DEFAULT_NATIVE_API_BASE_URL : '')

@@ -8,7 +8,7 @@ const config: CapacitorConfig = {
   appName: 'Monto',
   webDir: 'dist',
   server: {
-    url: 'https://monto.vercel.app',
+    url: 'https://monto-psi.vercel.app',
     androidScheme: 'https'
   },
   plugins: {
