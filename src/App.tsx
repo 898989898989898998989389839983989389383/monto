@@ -69,8 +69,8 @@ declare global {
 // --- Types ---
 type Screen = 'home' | 'courses' | 'notes' | 'quiz' | 'profile' | 'settings' | 'profile-edit' | 'help-center' | 'support-chat' | 'my-courses' | 'offline-notes' | 'about-us' | 'about-developer' | 'privacy-policy' | 'admin' | 'video-player' | 'note-viewer' | 'course-details' | 'binaural-beats' | 'live-classes' | 'live-class-viewer';
 
-const APP_SHARE_URL = 'https://play.google.com/store/apps/details?id=com.rbs.academy';
-const APP_SHARE_TEXT = 'Download RBS Academy for premium chemistry learning, notes, quizzes, and live classes.';
+const APP_SHARE_URL = 'https://play.google.com/store/apps/details?id=com.monto.app';
+const APP_SHARE_TEXT = 'Download Monto for premium chemistry learning, notes, quizzes, and live classes.';
 
 type YoutubePlayerApi = {
   playVideo: () => void;
@@ -344,25 +344,25 @@ interface StudentNotificationItem {
 
 type AdminPanelTab = 'dashboard' | 'app-control' | 'slider' | 'course' | 'free-course' | 'lesson' | 'note' | 'quiz' | 'question' | 'live' | 'user' | 'access' | 'push-notification';
 
-const AUTH_STORAGE_KEY = 'rbs-academy-users';
-const THEME_STORAGE_KEY = 'rbs-academy-theme';
-const USER_SESSION_KEY = 'rbs-academy-user-session';
-const ADMIN_SESSION_KEY = 'rbs-academy-admin-session';
-const ADMIN_ACCOUNTS_STORAGE_KEY = 'rbs-academy-admin-accounts';
-const NOTE_CATEGORIES_STORAGE_KEY = 'rbs-academy-note-categories';
-const APP_DATA_CACHE_KEY = 'rbs-academy-app-cache';
-const ADMIN_USERS_CACHE_KEY = 'rbs-academy-admin-users-cache';
-const APP_CONTROL_CACHE_KEY = 'rbs-academy-app-control-cache';
-const APP_WELCOME_SEEN_KEY = 'rbs-academy-welcome-seen';
-const NOTIFICATION_PREF_STORAGE_KEY = 'rbs-academy-notifications-enabled';
-const PUSH_TOKEN_STORAGE_KEY = 'rbs-academy-push-token';
-const PUSH_LAST_MESSAGE_STORAGE_KEY = 'rbs-academy-push-last-message';
-const STUDENT_NOTIFICATIONS_STORAGE_KEY = 'rbs-academy-student-notifications';
-const DEVICE_ID_STORAGE_KEY = 'rbs-academy-device-id';
+const AUTH_STORAGE_KEY = 'monto-users';
+const THEME_STORAGE_KEY = 'monto-theme';
+const USER_SESSION_KEY = 'monto-user-session';
+const ADMIN_SESSION_KEY = 'monto-admin-session';
+const ADMIN_ACCOUNTS_STORAGE_KEY = 'monto-admin-accounts';
+const NOTE_CATEGORIES_STORAGE_KEY = 'monto-note-categories';
+const APP_DATA_CACHE_KEY = 'monto-app-cache';
+const ADMIN_USERS_CACHE_KEY = 'monto-admin-users-cache';
+const APP_CONTROL_CACHE_KEY = 'monto-app-control-cache';
+const APP_WELCOME_SEEN_KEY = 'monto-welcome-seen';
+const NOTIFICATION_PREF_STORAGE_KEY = 'monto-notifications-enabled';
+const PUSH_TOKEN_STORAGE_KEY = 'monto-push-token';
+const PUSH_LAST_MESSAGE_STORAGE_KEY = 'monto-push-last-message';
+const STUDENT_NOTIFICATIONS_STORAGE_KEY = 'monto-student-notifications';
+const DEVICE_ID_STORAGE_KEY = 'monto-device-id';
 const NOTIFICATION_SOUND_FILE = 'rbs_wow_tone.wav';
-const NOTIFICATION_CHANNEL_UPDATES = 'rbs-wow-updates';
-const NOTIFICATION_CHANNEL_COURSE_ACCESS = 'rbs-wow-course-access';
-const NOTIFICATION_CHANNEL_LIVE_CLASSES = 'rbs-wow-live-classes';
+const NOTIFICATION_CHANNEL_UPDATES = 'monto-updates';
+const NOTIFICATION_CHANNEL_COURSE_ACCESS = 'monto-course-access';
+const NOTIFICATION_CHANNEL_LIVE_CLASSES = 'monto-live-classes';
 const LIVE_CLASS_REMINDER_LEAD_MS = 15 * 60 * 1000;
 const DATA_REQUEST_TIMEOUT_MS = 8000;
 let interactionAudioContext: AudioContext | null = null;
@@ -471,11 +471,11 @@ const isBackTapTarget = (target: EventTarget | null) => {
     || Boolean(button.querySelector('.lucide-arrow-left'));
 };
 const DEFAULT_APP_CONTROL_SETTINGS: AppControlSettings = {
-  appName: 'RBS Academy',
+  appName: 'Monto',
   welcomeEnabled: true,
-  welcomeMessage: 'Welcome to RBS Academy. Study smart, stay focused, and keep learning.',
+  welcomeMessage: 'Welcome to Monto. Study smart, stay focused, and keep learning.',
   maintenanceMode: false,
-  maintenanceMessage: 'RBS Academy is under maintenance. Please check back soon.',
+  maintenanceMessage: 'Monto is under maintenance. Please check back soon.',
   forceUpdate: false,
   latestVersion: '1.0.0',
   updateUrl: '',
@@ -487,12 +487,12 @@ const DEFAULT_APP_CONTROL_SETTINGS: AppControlSettings = {
   offlinePage: true,
   splashEnabled: true,
   pushEnabled: true,
-  notificationTitle: 'RBS Academy',
+  notificationTitle: 'Monto',
   notificationBody: 'New course update available.',
   notificationId: '',
   notificationSentAt: '',
 };
-const DEFAULT_NATIVE_API_BASE_URL = 'https://rbs-academy-current.vercel.app';
+const DEFAULT_NATIVE_API_BASE_URL = 'https://monto.vercel.app';
 const API_BASE_URL = String(
   import.meta.env.VITE_API_BASE_URL ||
   (Capacitor.isNativePlatform() ? DEFAULT_NATIVE_API_BASE_URL : '')
@@ -963,7 +963,7 @@ const normalizeStudentNotification = (notification: Partial<StudentNotificationI
 
   return {
     id: String(notification.id || data.notificationId || `notification-${Date.now()}`),
-    title: title || 'RBS Academy',
+    title: title || 'Monto',
     body: body || 'New academy update received.',
     receivedAt: Number(notification.receivedAt || Date.now()),
     screen,
@@ -1033,7 +1033,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-ygfWkUUe_mw',
     course_id: '7',
-    title: 'Prepare smarter for NEB Chemistry with RBS Sir!',
+    title: 'Prepare smarter for NEB Chemistry with Monto!',
     duration: '57:30',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1042,7 +1042,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-ctvAG2m0eck',
     course_id: '7',
-    title: 'Prepare smarter for NEB Chemistry with RBS Sir!',
+    title: 'Prepare smarter for NEB Chemistry with Monto!',
     duration: '34:41',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1051,7 +1051,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-dJN_zde16e0',
     course_id: '7',
-    title: 'Prepare smarter for NEB Chemistry with RBS Sir!',
+    title: 'Prepare smarter for NEB Chemistry with Monto!',
     duration: '56:25',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1060,7 +1060,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-Go11beHIcDc',
     course_id: '7',
-    title: 'RBS sir Chemistry important questions solving for NEB students',
+    title: 'Monto Chemistry important questions solving for NEB students',
     duration: '56:10',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1069,7 +1069,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-M-BNETidn8o',
     course_id: '7',
-    title: 'Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS',
+    title: 'Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto',
     duration: '1:02:22',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1078,7 +1078,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-l8f4e1_tWhE',
     course_id: '7',
-    title: 'First Part Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS |',
+    title: 'First Part Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto |',
     duration: '22:00',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -1087,7 +1087,7 @@ const fullChemistryCoursePlaylistLessons: Lesson[] = [
   {
     id: 'playlist-HOomRqoQi6g',
     course_id: '7',
-    title: 'Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS |Saral Shikshya Academy',
+    title: 'Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto |Saral Shikshya Academy',
     duration: '1:16:08',
     note_content: 'NEB Chemistry playlist lesson from Saral Shikshya Academy.',
     note_url: '',
@@ -2272,7 +2272,7 @@ const ensureNativeNotificationChannels = async () => {
   if (isNativePushAvailable()) {
     await PushNotifications.createChannel({
       id: NOTIFICATION_CHANNEL_UPDATES,
-      name: 'RBS Academy Updates',
+      name: 'Monto Updates',
       description: 'Course updates, live class reminders, and academy notices.',
       importance: 4,
       visibility: 1,
@@ -2287,7 +2287,7 @@ const ensureNativeNotificationChannels = async () => {
     await Promise.all([
       LocalNotifications.createChannel({
         id: NOTIFICATION_CHANNEL_UPDATES,
-        name: 'RBS Academy Updates',
+        name: 'Monto Updates',
         description: 'Course updates, live class reminders, and academy notices.',
         importance: 4,
         visibility: 1,
@@ -2436,7 +2436,7 @@ const scheduleNativeLiveClassAlerts = async (liveClasses: LiveClass[]) => {
           id: createStableNotificationId(`${liveClass.id}:reminder`),
           title: `Live class soon: ${liveClass.title}`,
           body: `Starts in 15 minutes. ${formatLiveClassDate(liveClass.scheduled_at)}`,
-          largeBody: `Your RBS Academy live class "${liveClass.title}" starts in 15 minutes.`,
+          largeBody: `Your Monto live class "${liveClass.title}" starts in 15 minutes.`,
           schedule: { at: new Date(reminderAt) },
           channelId: NOTIFICATION_CHANNEL_LIVE_CLASSES,
           sound: NOTIFICATION_SOUND_FILE,
@@ -2450,7 +2450,7 @@ const scheduleNativeLiveClassAlerts = async (liveClasses: LiveClass[]) => {
         id: createStableNotificationId(`${liveClass.id}:start`),
         title: `Live class starting: ${liveClass.title}`,
         body: 'Tap to open Live Classes and join now.',
-        largeBody: `Your RBS Academy live class "${liveClass.title}" is starting now.`,
+        largeBody: `Your Monto live class "${liveClass.title}" is starting now.`,
         schedule: { at: new Date(startsAt) },
         channelId: NOTIFICATION_CHANNEL_LIVE_CLASSES,
         sound: NOTIFICATION_SOUND_FILE,
@@ -2516,7 +2516,7 @@ const requestAppNotifications = async () => {
         await PushNotifications.register();
       }
 
-      await showAppNotification('RBS Academy notifications enabled', 'Course unlock, live class, and admin alerts are now active.', {
+      await showAppNotification('Monto notifications enabled', 'Course unlock, live class, and admin alerts are now active.', {
         type: 'notifications-enabled',
         screen: 'home',
       });
@@ -2551,9 +2551,9 @@ const requestAppNotifications = async () => {
   }
 
   if (success) {
-    await showLocalNotification('RBS Academy notifications enabled', {
+    await showLocalNotification('Monto notifications enabled', {
       body: 'You will receive course updates, live class reminders, and admin alerts here.',
-      tag: 'rbs-notifications-enabled',
+      tag: 'monto-notifications-enabled',
     });
   }
 
@@ -2745,8 +2745,8 @@ const LoginScreen = ({ onLogin }: { onLogin: (user: any) => void }) => {
     >
       <div className="auth-scenic-card auth-login-card px-6 py-6 sm:px-8 sm:py-8">
       <div className="auth-login-brand">
-        <img className="auth-login-logo" src="/logo.png" alt="RBS Academy logo" />
-        <div className="auth-login-badge">RBS Academy</div>
+        <img className="auth-login-logo" src="/logo.png" alt="Monto logo" />
+        <div className="auth-login-badge">Monto</div>
         <div className="auth-login-copy">
           <h1 className="auth-login-title">{isSignup ? 'Create account' : 'Welcome back'}</h1>
           <p className="auth-login-subtitle">
@@ -2984,7 +2984,7 @@ const NoInternetScreen = ({ onRetry }: { onRetry: () => void }) => (
       <p className="no-internet-kicker">Connection Lost</p>
       <h1>No internet connection</h1>
       <p>
-        Please check mobile data or Wi-Fi. RBS Academy will reconnect automatically when the network is back.
+        Please check mobile data or Wi-Fi. Monto will reconnect automatically when the network is back.
       </p>
       <button type="button" onClick={onRetry}>
         <RefreshCw size={18} />
@@ -3226,16 +3226,16 @@ const Header = ({ title, user, showBack, onBack, onMenuClick, onNotificationClic
         <button onClick={onMenuClick} className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center"><Menu size={20} /></button>
       )}
       <div>
-        {title !== 'RBS Academy' && (
+        {title !== 'Monto' && (
           <div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">RBS Academy</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">Monto</div>
             <div className="max-w-[180px] truncate text-[11px] font-semibold text-white/75">
               {user?.name ? `Hi, ${user.name}` : 'Student'}
             </div>
           </div>
         )}
         <h1 className="text-lg font-bold">{title}</h1>
-        {title === 'RBS Academy' && (
+        {title === 'Monto' && (
           <p className="max-w-[190px] truncate text-xs font-semibold text-white/75">
             {user?.name ? `Hi, ${user.name}` : 'Welcome, Student'}
           </p>
@@ -3263,7 +3263,7 @@ const Header = ({ title, user, showBack, onBack, onMenuClick, onNotificationClic
         <MessageSquare size={20} />
       </button>
       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border border-white/30">
-        <img src={getUserAvatarUrl(user || { name: 'RBS Academy' })} alt="Avatar" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+        <img src={getUserAvatarUrl(user || { name: 'Monto' })} alt="Avatar" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
       </div>
     </div>
   </header>
@@ -3795,7 +3795,7 @@ const SideDrawer = ({ isOpen, onClose, user, setScreen }: { isOpen: boolean, onC
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">Share App</p>
                     <h2 className="mt-1 text-xl font-black text-slate-900">Where do you want to share?</h2>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">Share RBS Academy with students using WhatsApp, Facebook, or any app.</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">Share Monto with students using WhatsApp, Facebook, or any app.</p>
                   </div>
                   <button
                     type="button"
@@ -4432,7 +4432,7 @@ const VideoPlayerScreen = ({
   protectedMode = false,
   videoNotesEnabled = true,
   videoDownloadEnabled = false,
-  watermark = 'RBS Academy'
+  watermark = 'Monto'
 }: { 
   onBack: () => void, 
   course: Course | null,
@@ -4745,7 +4745,7 @@ const VideoPlayerScreen = ({
         <>
           <div className="course-video-hide course-video-hide--top" />
           <div className="course-video-hide course-video-hide--bottom" />
-          <div className="course-video-brand course-video-brand--live">RBS Academy</div>
+          <div className="course-video-brand course-video-brand--live">Monto</div>
           {customEmbedPlaying && (
             <button
               type="button"
@@ -5921,7 +5921,7 @@ const SettingsScreen = ({
           <div className="space-y-3">
             {infoRow('Help Center', 'Get help with courses, notes, quizzes, and access', onOpenHelpCenter)}
             {infoRow('Privacy Policy', 'How your data is used in the academy app')}
-            {infoRow('App Version', 'RBS Academy v1.0.0')}
+            {infoRow('App Version', 'Monto v1.0.0')}
           </div>
         </section>
       </div>
@@ -6759,7 +6759,7 @@ const downloadUsersCsv = (users: AdminUser[]) => {
   const body = rows.map((row) =>
     userExportColumns.map(([key]) => escapeCsvValue(row[key])).join(',')
   ).join('\n');
-  downloadBlob(`rbs-academy-users-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8', `${header}\n${body}`);
+  downloadBlob(`monto-users-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8', `${header}\n${body}`);
 };
 
 const downloadUsersExcel = (users: AdminUser[]) => {
@@ -6767,7 +6767,7 @@ const downloadUsersExcel = (users: AdminUser[]) => {
   const head = userExportColumns.map(([, label]) => `<th>${escapeHtmlValue(label)}</th>`).join('');
   const body = rows.map((row) => `<tr>${userExportColumns.map(([key]) => `<td>${escapeHtmlValue(row[key])}</td>`).join('')}</tr>`).join('');
   const html = `<!doctype html><html><head><meta charset="utf-8" /></head><body><table border="1"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></body></html>`;
-  downloadBlob(`rbs-academy-users-${new Date().toISOString().slice(0, 10)}.xls`, 'application/vnd.ms-excel;charset=utf-8', html);
+  downloadBlob(`monto-users-${new Date().toISOString().slice(0, 10)}.xls`, 'application/vnd.ms-excel;charset=utf-8', html);
 };
 
 const getImportedQuestionSource = (payload: unknown) => {
@@ -6941,7 +6941,7 @@ const shareAcademyApp = async () => {
   }
 
   const shareData = {
-    title: 'RBS Academy',
+    title: 'Monto',
     text: APP_SHARE_TEXT,
     url: APP_SHARE_URL,
   };
@@ -7113,7 +7113,7 @@ const AdminLoginScreen = ({
       >
         <div className="relative z-10">
           <div className="auth-login-brand auth-login-brand--compact">
-            <div className="auth-login-badge">RBS Academy</div>
+            <div className="auth-login-badge">Monto</div>
             <div className="auth-login-copy">
               <h1 className="auth-login-title">{mode === 'superadmin' ? 'Super admin access' : 'Admin login'}</h1>
               <p className="auth-login-subtitle">
@@ -7427,7 +7427,7 @@ const AdminPanelScreen = ({
     ].some((value) => String(value || '').toLowerCase().includes(normalizedAccessCourseSearch));
   });
   const activeTabLabel = tabs.find((tab) => tab.id === activeTab)?.label || 'Dashboard';
-  const adminDisplayName = authSession.username || users[0]?.name || 'RBS Admin';
+  const adminDisplayName = authSession.username || users[0]?.name || 'Monto Admin';
   const adminInitials = adminDisplayName
     .split(' ')
     .filter(Boolean)
@@ -8659,12 +8659,12 @@ const AdminPanelScreen = ({
               <div className="admin-sidebar-brand-mark">
                 <img
                   src="/logo.png"
-                  alt="RBS Academy logo"
+                  alt="Monto logo"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
-                <div className="admin-sidebar-brand-title">RBS Academy</div>
+                <div className="admin-sidebar-brand-title">Monto</div>
                 <div className="admin-sidebar-brand-subtitle">Admin Dashboard</div>
               </div>
             </div>
@@ -9407,7 +9407,7 @@ const AdminPanelScreen = ({
                   <input
                     value={pushForm.title}
                     onChange={(event) => setPushForm((current) => ({ ...current, title: event.target.value }))}
-                    placeholder="RBS Academy"
+                    placeholder="Monto"
                   />
                 </label>
                 <label className="admin-login-field">
@@ -11397,9 +11397,9 @@ Questions are read from your JSON and imported into the selected quiz subject sh
           <button onClick={onRefresh} className="text-primary text-sm font-bold">Refresh</button>
         </div>
         <div className="admin-soft-panel px-4 py-4 text-xs text-gray-500 space-y-2">
-          <p>{courses.length} courses loaded from Supabase</p>
-          <p>{quizzes.length} quizzes loaded from Supabase</p>
-          <p>{users.length} students loaded from Supabase</p>
+          <p>{courses.length} courses loaded from Postgres</p>
+          <p>{quizzes.length} quizzes loaded from Postgres</p>
+          <p>{users.length} students loaded from Postgres</p>
           {courses.slice(0, 5).map((course) => (
             <div key={course.id} className="flex justify-between gap-3">
               <span className="truncate">{course.title}</span>
@@ -11680,7 +11680,7 @@ const NoteViewerScreen = ({
   onBack, 
   lesson,
   protectedMode = false,
-  watermark = 'RBS Academy'
+  watermark = 'Monto'
 }: { 
   onBack: () => void, 
   lesson: Lesson | null,
@@ -11935,7 +11935,7 @@ export default function App() {
       addStudentNotification({
         id: `course-unlocked-${courseId}-${Date.now()}`,
         title: 'Course unlocked',
-        body: `${courseTitle} is now available in your RBS Academy app.`,
+        body: `${courseTitle} is now available in your Monto app.`,
         receivedAt: Date.now(),
         screen: 'video-player',
         type: 'course-unlocked',
@@ -11947,7 +11947,7 @@ export default function App() {
       });
       const shown = await showAppNotification(
         'Course unlocked',
-        `${courseTitle} is now available in your RBS Academy app.`,
+        `${courseTitle} is now available in your Monto app.`,
         {
           type: 'course-unlocked',
           screen: 'video-player',
@@ -12140,7 +12140,7 @@ export default function App() {
       if (!isManagementRoute && (settings.notificationId || settings.notificationSentAt)) {
         addStudentNotification({
           id: settings.notificationId || `admin-broadcast-${settings.notificationSentAt || Date.now()}`,
-          title: settings.notificationTitle || 'RBS Academy',
+          title: settings.notificationTitle || 'Monto',
           body: settings.notificationBody || 'New academy update received.',
           receivedAt: settings.notificationSentAt ? new Date(settings.notificationSentAt).getTime() : Date.now(),
           screen: 'home',
@@ -12157,7 +12157,7 @@ export default function App() {
 
       if (shouldShowAdminNotification) {
         const shown = await showAppNotification(
-          settings.notificationTitle || 'RBS Academy',
+          settings.notificationTitle || 'Monto',
           settings.notificationBody || 'New academy update received.',
           {
             type: 'admin-broadcast',
@@ -12196,7 +12196,7 @@ export default function App() {
       return;
     }
 
-    const state = { rbsAcademyScreen: screen };
+    const state = { montoScreen: screen };
     if (!historyReadyRef.current) {
       window.history.replaceState(state, '', window.location.href);
       historyReadyRef.current = true;
@@ -12223,7 +12223,7 @@ export default function App() {
 
     const handlePopState = (event: PopStateEvent) => {
       playInteractionSound('back');
-      const nextScreen = (event.state as { rbsAcademyScreen?: Screen } | null)?.rbsAcademyScreen;
+      const nextScreen = (event.state as { montoScreen?: Screen } | null)?.montoScreen;
       if (nextScreen) {
         restoringHistoryRef.current = true;
         setScreenState(nextScreen);
@@ -12232,7 +12232,7 @@ export default function App() {
 
       if (screenRef.current !== 'home') {
         restoringHistoryRef.current = true;
-        window.history.replaceState({ rbsAcademyScreen: 'home' }, '', window.location.href);
+        window.history.replaceState({ montoScreen: 'home' }, '', window.location.href);
         setScreenState('home');
       }
     };
@@ -12378,7 +12378,7 @@ export default function App() {
 
       handles.push(await PushNotifications.addListener('pushNotificationReceived', async (notification) => {
         if (!isMounted) return;
-        const title = notification.title || 'RBS Academy';
+        const title = notification.title || 'Monto';
         const body = notification.body || 'New academy update received.';
         const payload = (notification.data || {}) as Record<string, unknown>;
         const receivedAt = Date.now();
@@ -12449,7 +12449,7 @@ export default function App() {
         }));
         addStudentNotification({
           id: String(payload.notificationId || `local-${receivedAt}`),
-          title: notification.title || 'RBS Academy',
+          title: notification.title || 'Monto',
           body: notification.body || 'New academy update received.',
           receivedAt,
           screen: typeof payload.screen === 'string' ? payload.screen as Screen : 'home',
@@ -12529,7 +12529,7 @@ export default function App() {
         return;
       }
 
-      if (window.confirm('Exit RBS Academy?')) {
+      if (window.confirm('Exit Monto?')) {
         CapacitorApp.exitApp();
       }
     }).then((handle) => {
@@ -12774,7 +12774,7 @@ export default function App() {
       if (appControlSettings.pushEnabled) {
         const shown = await showAppNotification(
           'Course unlocked',
-          `${unlockedCourse.title} is now available in your RBS Academy app.`,
+          `${unlockedCourse.title} is now available in your Monto app.`,
           {
             type: 'course-unlocked',
             screen: 'video-player',
@@ -13022,7 +13022,7 @@ export default function App() {
           protectedMode={videoSurfaceProtectionActive}
           videoNotesEnabled={appControlSettings.videoNotesEnabled}
           videoDownloadEnabled={appControlSettings.videoDownloadEnabled}
-          watermark={`${user?.name || 'Student'} - ${user?.email || 'RBS Academy'}`}
+          watermark={`${user?.name || 'Student'} - ${user?.email || 'Monto'}`}
           onLessonSelect={(lesson) => setSelectedLesson(lesson)}
           onViewNotes={(lesson) => {
             setSelectedLesson(lesson);
@@ -13036,7 +13036,7 @@ export default function App() {
           onBack={() => setScreen(previousScreen)} 
           lesson={selectedLesson} 
           protectedMode={premiumSurfaceProtectionActive}
-          watermark={`${user?.name || 'Student'} - ${user?.email || 'RBS Academy'}`}
+          watermark={`${user?.name || 'Student'} - ${user?.email || 'Monto'}`}
         />
       );
       case 'course-details': return (
@@ -13085,7 +13085,7 @@ export default function App() {
 
   const getTitle = () => {
     switch (screen) {
-      case 'home': return 'RBS Academy';
+      case 'home': return 'Monto';
       case 'courses': return 'Courses';
       case 'notes': return 'Notes';
       case 'quiz': return 'Practice Quiz';
@@ -13104,7 +13104,7 @@ export default function App() {
       case 'live-class-viewer': return 'Live Class';
       case 'course-details': return 'Course Details';
       case 'binaural-beats': return 'Binaural Beats';
-      default: return 'RBS Academy';
+      default: return 'Monto';
     }
   };
 
@@ -13185,7 +13185,7 @@ export default function App() {
 
   const studentProtectionClass = !isManagementRoute && screenProtectionActive ? 'protected-learning-surface' : '';
   const studentPolishClass = !isManagementRoute && !['video-player', 'note-viewer'].includes(screen) ? 'student-ui-polish' : '';
-  const studentWatermark = `${user?.name || 'Student'} - ${user?.email || 'RBS Academy'}`;
+  const studentWatermark = `${user?.name || 'Student'} - ${user?.email || 'Monto'}`;
 
   return (
     <div

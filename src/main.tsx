@@ -25,7 +25,7 @@ if ('serviceWorker' in navigator && isNativeCapacitor) {
 
     if ('caches' in window) {
       caches.keys()
-        .then((keys) => Promise.all(keys.filter((key) => key.startsWith('rbs-academy-app-')).map((key) => caches.delete(key))))
+        .then((keys) => Promise.all(keys.filter((key) => key.startsWith('monto-app-')).map((key) => caches.delete(key))))
         .catch(() => {});
     }
   });

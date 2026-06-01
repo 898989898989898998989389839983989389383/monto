@@ -153,7 +153,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-ygfWkUUe_mw",
     course_id: "7",
-    title: "Prepare smarter for NEB Chemistry with RBS Sir!",
+    title: "Prepare smarter for NEB Chemistry with Monto!",
     duration: "57:30",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -162,7 +162,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-ctvAG2m0eck",
     course_id: "7",
-    title: "Prepare smarter for NEB Chemistry with RBS Sir!",
+    title: "Prepare smarter for NEB Chemistry with Monto!",
     duration: "34:41",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -171,7 +171,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-dJN_zde16e0",
     course_id: "7",
-    title: "Prepare smarter for NEB Chemistry with RBS Sir!",
+    title: "Prepare smarter for NEB Chemistry with Monto!",
     duration: "56:25",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -180,7 +180,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-Go11beHIcDc",
     course_id: "7",
-    title: "RBS sir Chemistry important questions solving for NEB students",
+    title: "Monto Chemistry important questions solving for NEB students",
     duration: "56:10",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -189,7 +189,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-M-BNETidn8o",
     course_id: "7",
-    title: "Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS",
+    title: "Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto",
     duration: "1:02:22",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -198,7 +198,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-l8f4e1_tWhE",
     course_id: "7",
-    title: "First Part Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS |",
+    title: "First Part Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto |",
     duration: "22:00",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -207,7 +207,7 @@ const fullChemistryCoursePlaylistLessons: SeedLesson[] = [
   {
     id: "playlist-HOomRqoQi6g",
     course_id: "7",
-    title: "Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | RBS |Saral Shikshya Academy",
+    title: "Chemistry NEB Grade 12 Revision 2026 |Important Questions & Numerical | Monto |Saral Shikshya Academy",
     duration: "1:16:08",
     note_content: "NEB Chemistry playlist lesson from Saral Shikshya Academy.",
     note_url: "",
@@ -829,40 +829,28 @@ const normalizeRow = <T extends RowDataPacket>(row: RowDataPacket): T => {
 
 const normalizeRows = <T extends RowDataPacket>(rows: RowDataPacket[]) => rows.map((row) => normalizeRow<T>(row));
 
-const normalizeSupabasePoolerUrl = (value: string) => {
-  try {
-    const url = new URL(value);
-    if (url.hostname.includes("pooler.supabase.com") && url.port === "5432") {
-      url.port = "6543";
-      return url.toString();
-    }
-  } catch {}
-
-  return value;
-};
-
 const getConnectionConfig = () => {
   const ssl =
-    String(process.env.SUPABASE_SSL ?? "true").toLowerCase() === "false"
+    String(process.env.POSTGRES_SSL ?? "true").toLowerCase() === "false"
       ? false
-      : { rejectUnauthorized: String(process.env.SUPABASE_SSL_REJECT_UNAUTHORIZED ?? "true").toLowerCase() !== "false" };
+      : { rejectUnauthorized: String(process.env.POSTGRES_SSL_REJECT_UNAUTHORIZED ?? "true").toLowerCase() !== "false" };
 
-  const url = process.env.SUPABASE_DB_URL?.trim() || process.env.DATABASE_URL?.trim();
+  const url = process.env.DATABASE_URL?.trim();
   if (url) {
     return {
-      connectionString: normalizeSupabasePoolerUrl(url),
+      connectionString: url,
       ssl,
     };
   }
 
-  const host = process.env.SUPABASE_HOST?.trim();
-  const port = Number(process.env.SUPABASE_PORT || 5432);
-  const user = process.env.SUPABASE_USER?.trim();
-  const password = process.env.SUPABASE_PASSWORD?.trim();
-  const database = process.env.SUPABASE_DATABASE?.trim();
+  const host = process.env.POSTGRES_HOST?.trim();
+  const port = Number(process.env.POSTGRES_PORT || 5432);
+  const user = process.env.POSTGRES_USER?.trim();
+  const password = process.env.POSTGRES_PASSWORD?.trim();
+  const database = process.env.POSTGRES_DATABASE?.trim();
 
   if (!host || !user || !database) {
-    throw new Error("Supabase/Postgres connection is not configured. Set SUPABASE_DB_URL or SUPABASE_HOST, SUPABASE_USER, SUPABASE_PASSWORD, and SUPABASE_DATABASE.");
+    throw new Error("Postgres connection is not configured. Set DATABASE_URL or POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DATABASE.");
   }
 
   return {

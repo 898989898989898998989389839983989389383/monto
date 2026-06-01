@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rbs-academy-app-v14';
+const CACHE_NAME = 'monto-app-v14';
 const OFFLINE_URL = '/offline.html';
 const CORE_ASSETS = [
   OFFLINE_URL,
@@ -56,7 +56,7 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
-  const title = data.title || 'RBS Academy';
+  const title = data.title || 'Monto';
   const options = {
     body: data.body || 'You have a new academy update.',
     icon: '/icons/icon-192.png',

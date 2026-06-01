@@ -4,11 +4,11 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.rbsacademy.app',
-  appName: 'RBS Academy',
+  appId: 'com.monto.app',
+  appName: 'Monto',
   webDir: 'dist',
   server: {
-    url: 'https://rbs-academy-current.vercel.app',
+    url: 'https://monto.vercel.app',
     androidScheme: 'https'
   },
   plugins: {

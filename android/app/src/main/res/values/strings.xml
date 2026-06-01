@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">RBS Academy</string>
-    <string name="title_activity_main">RBS Academy</string>
-    <string name="package_name">com.rbsacademy.app</string>
-    <string name="custom_url_scheme">com.rbsacademy.app</string>
-    <string name="default_notification_channel_id">rbs-wow-updates</string>
+    <string name="app_name">Monto</string>
+    <string name="title_activity_main">Monto</string>
+    <string name="package_name">com.monto.app</string>
+    <string name="custom_url_scheme">com.monto.app</string>
+    <string name="default_notification_channel_id">monto-updates</string>
 </resources>

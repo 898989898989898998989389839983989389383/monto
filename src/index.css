@@ -251,7 +251,7 @@ body {
   }
 
   body::before {
-    content: "Protected RBS Academy premium content cannot be printed.";
+    content: "Protected Monto premium content cannot be printed.";
     display: block;
     padding: 2rem;
     color: #0f172a;

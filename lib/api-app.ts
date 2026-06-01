@@ -8,9 +8,6 @@ import type { Request, Response, NextFunction } from "express";
 import type { PoolConnection, RowDataPacket } from "./mysql.js";
 import { execute, initDatabase, queryOne, queryRows, withTransaction } from "./mysql.js";
 
-const SUPABASE_URL = process.env.SUPABASE_URL?.trim() || "";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() || "";
-const SUPABASE_STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET?.trim() || "uploads";
 type CloudinaryConfig = { cloudName: string; apiKey: string; apiSecret: string };
 const parseCloudinaryUrl = (configuredUrl: string): CloudinaryConfig | null => {
   if (!configuredUrl) {
@@ -44,12 +41,12 @@ const CLOUDINARY_PDF_CONFIG: CloudinaryConfig = parseCloudinaryUrl(process.env.C
 const CLOUDINARY_THUMBNAIL_CONFIG: CloudinaryConfig =
   parseCloudinaryUrl(process.env.CLOUDINARY_THUMBNAIL_URL?.trim() || process.env.CLOUDINARY_ACCOUNT_2_URL?.trim() || "") ||
   CLOUDINARY_PDF_CONFIG;
-const CLOUDINARY_FOLDER = process.env.CLOUDINARY_FOLDER?.trim().replace(/^\/+|\/+$/g, "") || "rbs-academy";
+const CLOUDINARY_FOLDER = process.env.CLOUDINARY_FOLDER?.trim().replace(/^\/+|\/+$/g, "") || "monto";
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME?.trim() || "";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 const SUPER_ADMIN_USERNAME = process.env.SUPER_ADMIN_USERNAME?.trim() || "";
 const SUPER_ADMIN_PASSWORD = process.env.SUPER_ADMIN_PASSWORD || "";
-const ADMIN_AUTH_SECRET = process.env.ADMIN_AUTH_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const ADMIN_AUTH_SECRET = process.env.ADMIN_AUTH_SECRET || "";
 const SMTP_HOST = process.env.SMTP_HOST?.trim() || "smtp.gmail.com";
 const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
 const SMTP_SECURE = String(process.env.SMTP_SECURE || "true").toLowerCase() !== "false";
@@ -59,14 +56,14 @@ const SMTP_FROM_EMAIL = process.env.SMTP_FROM_EMAIL?.trim() || SMTP_USER;
 const ADMIN_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 const PASSWORD_PREFIX = "scrypt";
 const APP_CONTROL_KEY = "app-control";
-const NOTIFICATION_CHANNEL_UPDATES = "rbs-wow-updates";
+const NOTIFICATION_CHANNEL_UPDATES = "monto-updates";
 const NOTIFICATION_SOUND_FILE = "rbs_wow_tone.wav";
 const DEFAULT_APP_CONTROL_SETTINGS = {
-  appName: "RBS Academy",
+  appName: "Monto",
   welcomeEnabled: true,
-  welcomeMessage: "Welcome to RBS Academy. Study smart, stay focused, and keep learning.",
+  welcomeMessage: "Welcome to Monto. Study smart, stay focused, and keep learning.",
   maintenanceMode: false,
-  maintenanceMessage: "RBS Academy is under maintenance. Please check back soon.",
+  maintenanceMessage: "Monto is under maintenance. Please check back soon.",
   forceUpdate: false,
   latestVersion: "1.0.0",
   updateUrl: "",
@@ -78,7 +75,7 @@ const DEFAULT_APP_CONTROL_SETTINGS = {
   offlinePage: true,
   splashEnabled: true,
   pushEnabled: true,
-  notificationTitle: "RBS Academy",
+  notificationTitle: "Monto",
   notificationBody: "New course update available.",
   notificationId: "",
   notificationSentAt: "",
@@ -102,7 +99,7 @@ const ALLOWED_NOTE_MIME_TYPES = new Set([
 ]);
 const MAX_NOTE_BYTES = 15 * 1024 * 1024;
 const uploadRoot = process.env.VERCEL
-  ? path.join(os.tmpdir(), "rbs-academy-uploads")
+  ? path.join(os.tmpdir(), "monto-uploads")
   : path.join(process.cwd(), "uploads");
 
 type DbUser = RowDataPacket & {
@@ -219,11 +216,11 @@ const verifyPassword = (password: string, storedPassword: string) => {
 const createAccessCode = () => {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const chunk = () => Array.from({ length: 4 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join("");
-  return `RBS-${chunk()}-${chunk()}`;
+  return `MONTO-${chunk()}-${chunk()}`;
 };
 
 const createOtpCode = () => String(Math.floor(100000 + Math.random() * 900000));
-const createTemporaryPassword = () => `RBS${randomBytes(4).toString("hex").toUpperCase()}`;
+const createTemporaryPassword = () => `MONTO${randomBytes(4).toString("hex").toUpperCase()}`;
 
 const assertSmtpConfigured = () => {
   if (!SMTP_USER || !SMTP_PASS || !SMTP_FROM_EMAIL) {
@@ -243,7 +240,7 @@ const sendEmail = async (to: string, subject: string, text: string) => {
     },
   });
   await transporter.sendMail({
-    from: `"RBS Academy" <${SMTP_FROM_EMAIL}>`,
+    from: `"Monto" <${SMTP_FROM_EMAIL}>`,
     to,
     subject,
     text,
@@ -788,22 +785,6 @@ const uploadToCloudinary = async (
   return resourceType === "image" ? optimizeCloudinaryImageUrl(result.secure_url) : result.secure_url;
 };
 
-const getSupabaseObjectPath = (imageUrl?: string) => {
-  const value = String(imageUrl || "").trim();
-  const publicPrefix = `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_STORAGE_BUCKET}/`;
-  const signedPrefix = `${SUPABASE_URL}/storage/v1/object/sign/${SUPABASE_STORAGE_BUCKET}/`;
-
-  if (value.startsWith(publicPrefix)) {
-    return value.slice(publicPrefix.length).split("?")[0];
-  }
-
-  if (value.startsWith(signedPrefix)) {
-    return value.slice(signedPrefix.length).split("?")[0];
-  }
-
-  return "";
-};
-
 const saveSliderImage = async (payload: Record<string, unknown>) => {
   const { imageData, imageUrl, mimeType } = parseImagePayload(payload);
   if (!imageData) {
@@ -908,23 +889,6 @@ const deleteStoredImage = async (imageUrl?: string, localPrefix = "/uploads/") =
       await fetch(
         `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudinaryConfig.cloudName)}/${resourceType}/destroy`,
         { method: "POST", body: form },
-      );
-    } catch {}
-    return;
-  }
-
-  const supabaseObjectPath = getSupabaseObjectPath(imageUrl);
-  if (supabaseObjectPath && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
-    try {
-      await fetch(
-        `${SUPABASE_URL}/storage/v1/object/${SUPABASE_STORAGE_BUCKET}/${supabaseObjectPath}`,
-        {
-          method: "DELETE",
-          headers: {
-            apikey: SUPABASE_SERVICE_ROLE_KEY,
-            Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          },
-        },
       );
     } catch {}
     return;
@@ -1579,8 +1543,8 @@ export const createApiApp = async () => {
     });
     await sendEmail(
       normalizedEmail,
-      "RBS Academy email verification OTP",
-      `Your RBS Academy signup OTP is ${otp}. It expires in 10 minutes.`,
+      "Monto email verification OTP",
+      `Your Monto signup OTP is ${otp}. It expires in 10 minutes.`,
     );
     res.json({ success: true, message: "OTP sent to your email" });
   }));
@@ -1665,8 +1629,8 @@ export const createApiApp = async () => {
     await saveOtp(normalizedEmail, "password-reset", otp);
     await sendEmail(
       normalizedEmail,
-      "RBS Academy password reset OTP",
-      `Your RBS Academy password reset OTP is ${otp}. It expires in 10 minutes.`,
+      "Monto password reset OTP",
+      `Your Monto password reset OTP is ${otp}. It expires in 10 minutes.`,
     );
     res.json({ success: true, message: "Password reset OTP sent to your email" });
   }));
@@ -1695,8 +1659,8 @@ export const createApiApp = async () => {
     await execute("UPDATE users SET password = ? WHERE id = ?", [hashPassword(temporaryPassword), user.id]);
     await sendEmail(
       normalizedEmail,
-      "RBS Academy temporary password",
-      `Your RBS Academy temporary password is ${temporaryPassword}. Login with this password and change it from Profile Information.`,
+      "Monto temporary password",
+      `Your Monto temporary password is ${temporaryPassword}. Login with this password and change it from Profile Information.`,
     );
     res.json({ success: true, message: "A temporary password has been sent to your email" });
   }));
